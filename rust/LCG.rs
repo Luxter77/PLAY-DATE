@@ -1,53 +1,67 @@
 #![allow(dead_code)]
 
-const A_PRIMA: u128 = 1103515245;
-const C_PRIMA: u128 = 1;
-const M_PRIMA: u128 = i32::MAX as u128;
+use std::io::Write;
+
+type GenSize          = i32;
+type ListPart         = [bool; GenSize::MAX as usize];
+type ExtendedList<'a> = [&'a mut ListPart; 8];
+
+static mut PART1:  ListPart = [false; GenSize::MAX as usize];
+static mut PART2:  ListPart = [false; GenSize::MAX as usize];
+static mut PART3:  ListPart = [false; GenSize::MAX as usize];
+static mut PART4:  ListPart = [false; GenSize::MAX as usize];
+static mut PART5:  ListPart = [false; GenSize::MAX as usize];
+static mut PART6:  ListPart = [false; GenSize::MAX as usize];
+static mut PART7:  ListPart = [false; GenSize::MAX as usize];
+static mut PART8:  ListPart = [false; GenSize::MAX as usize];
+
+const A_PRIMA: GenSize = 1103515245;
+const C_PRIMA: GenSize = 12345;
+const M_PRIMA: GenSize = GenSize::MAX;
+
+static mut BIG: ExtendedList = unsafe {[
+        &mut PART1, &mut PART2,  &mut PART3,  &mut PART4,
+        &mut PART5, &mut PART6,  &mut PART7,  &mut PART8,
+]};
 
 fn main() {
-    let mut num: u128 = 2;
-    let mut max: u128;
-    let mut min: u128;
-    let mut count: u128 = 0;
-    let first: u128;
-
+    let mut num:   GenSize = 12345;
+    let mut count: GenSize = 0;
+    let mut round: usize   = 0;
+    
+    let mut max: GenSize;
+    let mut min: GenSize;
+    
     let a = A_PRIMA % M_PRIMA;
     let b = C_PRIMA % M_PRIMA;
 
-    let mut stupid_big_one: [bool; u64::MAX as usize] = [false; u64::MAX as usize];
-    let mut stupid_big_two: [bool; u64::MAX as usize] = [false; u64::MAX as usize];
-
     num = ((a * (num % M_PRIMA)) % M_PRIMA) + b;
+    
+    let first: GenSize = num;
 
-    first = num;
-    max = num;
-    min = num;
+    max   = num;
+    min   = num;
 
     loop {
         num = ((a * (num % M_PRIMA)) % M_PRIMA) + b;
+
+        println!("{}", format!("[ {:>3.2}% ][ num: {num}][ round: {} ]", count as f32 * 100.0 / 2147483647.0, round+1));
+        std::io::stdout().flush().unwrap();
+
         count += 1;
 
-        if num < u64::MAX.into() {
-            if stupid_big_one[num as usize] {
-                println!("{stupid_big_one:?}");
-                break;
-            } else {
-                stupid_big_one[num as usize] = true;
-            };
+        if unsafe { BIG[round][num as usize] } {
+            match round { 7 => { break; }, _ => { round += 1; } };
         } else {
-            if stupid_big_two[(num - (u64::MAX as u128)) as usize] {
-                println!("{stupid_big_two:?}");
-                break;
-            } else {
-                stupid_big_two[num as usize] = true;
-            };
+            unsafe { BIG[round][num as usize] = true };
         };
 
-        if num > max { max = num };
-        if num < min { min = num };
-        // print!("{:>3.2}%\r", count as f32 * 100.0 / 2147483647.0);
+        if ( num * (round as GenSize) ) > max { max = num * (round as GenSize) };
+        if ( num * (round as GenSize) ) < min { min = num * (round as GenSize) };
+
     };
+
     let distance = max - min;
 
-    println!("\nCount: {count}\nMax: {max}\nMin: {min}\nDistance: {distance}");
+    println!("First: {first}\nCount: {count}\nMax: {max}\nMin: {min}\nDistance: {distance}");
 }
