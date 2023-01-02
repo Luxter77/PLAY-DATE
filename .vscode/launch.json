@@ -1,0 +1,286 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'FiniteTimeAtRuntime'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=FiniteTimeAtRuntime",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "FiniteTimeAtRuntime",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'FiniteTimeAtRuntime'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=FiniteTimeAtRuntime",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "FiniteTimeAtRuntime",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'Full-Cycle'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=Full-Cycle",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "Full-Cycle",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'Full-Cycle'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=Full-Cycle",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "Full-Cycle",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'IPu32'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=IPu32",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "IPu32",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'IPu32'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=IPu32",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "IPu32",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'LCG'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=LCG",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "LCG",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'LCG'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=LCG",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "LCG",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'Refs'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=Refs",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "Refs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'Refs'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=Refs",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "Refs",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'unsortable'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=unsortable",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "unsortable",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'unsortable'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=unsortable",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "unsortable",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'usize'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=usize",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "usize",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'usize'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=usize",
+                    "--package=PLAY-DATE-MIX"
+                ],
+                "filter": {
+                    "name": "usize",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in library 'PLAY-DATE'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=PLAY-DATE"
+                ],
+                "filter": {
+                    "name": "PLAY-DATE",
+                    "kind": "lib"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
