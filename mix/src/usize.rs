@@ -13,20 +13,18 @@ fn main() {
     println!("| i128:  min:{:>41} | max:{:>41} |", i128::MIN,    i128::MAX );
     println!("| u128:  min:{:>41} | max:{:>41} |", u128::MIN,    u128::MAX );
     println!("|{}|", "_".repeat(102));
-
-
-    println!("| i8:    mid:{:>41} |", i8::MAX    / 2);
-    println!("| u8:    mid:{:>41} |", u8::MAX    / 2);
-    println!("| i16:   mid:{:>41} |", i16::MAX   / 2);
-    println!("| u16:   mid:{:>41} |", u16::MAX   / 2);
-    println!("| i32:   mid:{:>41} |", i32::MAX   / 2);
-    println!("| u32:   mid:{:>41} |", u32::MAX   / 2);
-    println!("| i64:   mid:{:>41} |", i64::MAX   / 2);
-    println!("| isize: mid:{:>41} |", isize::MAX / 2);
-    println!("| u64:   mid:{:>41} |", u64::MAX   / 2);
-    println!("| usize: mid:{:>41} |", usize::MAX / 2);
-    println!("| i128:  mid:{:>41} |", i128::MAX  / 2);
-    println!("| u128:  mid:{:>41} |", u128::MAX  / 2);
-    println!("|{}|", "_".repeat(54));
+    println!("| i8:    mid:{:>41} | sqrt:{:>40} |", i8::MAX    / 2, (i8::MAX    as f64).sqrt());
+    println!("| u8:    mid:{:>41} | sqrt:{:>40} |", u8::MAX    / 2, (u8::MAX    as f64).sqrt());
+    println!("| i16:   mid:{:>41} | sqrt:{:>40} |", i16::MAX   / 2, (i16::MAX   as f64).sqrt());
+    println!("| u16:   mid:{:>41} | sqrt:{:>40} |", u16::MAX   / 2, (u16::MAX   as f64).sqrt());
+    println!("| i32:   mid:{:>41} | sqrt:{:>40} |", i32::MAX   / 2, (i32::MAX   as f64).sqrt());
+    println!("| u32:   mid:{:>41} | sqrt:{:>40} |", u32::MAX   / 2, (u32::MAX   as f64).sqrt());
+    println!("| i64:   mid:{:>41} | sqrt:{:>40} |", i64::MAX   / 2, (i64::MAX   as f64).sqrt());
+    println!("| isize: mid:{:>41} | sqrt:{:>40} |", isize::MAX / 2, (isize::MAX as f64).sqrt());
+    println!("| u64:   mid:{:>41} | sqrt:{:>40} |", u64::MAX   / 2, (u64::MAX   as f64).sqrt());
+    println!("| usize: mid:{:>41} | sqrt:{:>40} |", usize::MAX / 2, (usize::MAX as f64).sqrt());
+    println!("| i128:  mid:{:>41} | sqrt:{:>40} |", i128::MAX  / 2, (i128::MAX  as f64).sqrt());
+    println!("| u128:  mid:{:>41} | sqrt:{:>40} |", u128::MAX  / 2, (u128::MAX  as f64).sqrt());
+    println!("|{}|", "_".repeat(102));
 
 }
