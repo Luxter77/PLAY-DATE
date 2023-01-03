@@ -8,6 +8,9 @@ human-sort         = { git = "https://github.com/dragazo/human-sort",  package =
 human-sort-patched = { git = "https://github.com/luxter77/human-sort", package = "human-sort"}
 rand = "0.8.5"
 
+[features]
+HUGE-COMPUTER = []
+
 [[bin]]
 name = "FiniteTimeAtRuntime"
 path = "src/finite_size_at_runtime.rs"
