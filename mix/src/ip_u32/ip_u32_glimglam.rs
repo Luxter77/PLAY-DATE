@@ -6,8 +6,8 @@ use crate::ip_u32_lib::{Randomizable, Octet};
 
 #[inline(always)]
 fn s() {
+    std::io::Write::flush(&mut std::io::stdout()).unwrap();
     std::thread::sleep(std::time::Duration::from_secs_f32(0.8));
-    std::io::Write::flush(&mut std::io::stdout()).unwrap()
 }
 
 fn main() {
