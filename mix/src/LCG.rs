@@ -29,7 +29,9 @@ static mut BIG: ExtendedList = unsafe {[
 fn main() {
     let mut num:   GenSize = 12345;
     let mut count: GenSize = 0;
-    let mut round: usize   = 0;
+    
+    #[cfg(    feature = "HUGE-COMPUTER") ] let mut round: usize = 0;
+    #[cfg(not(feature = "HUGE-COMPUTER"))] let round:     usize = 0; 
     
     let mut max: GenSize;
     let mut min: GenSize;
@@ -41,8 +43,8 @@ fn main() {
     
     let first: GenSize = num;
 
-    max   = num;
-    min   = num;
+    max = num;
+    min = num;
 
     loop {
         num = (a.overflowing_mul(num % M_PRIMA).0 % M_PRIMA).overflowing_add(b).0;

@@ -21,7 +21,11 @@ path = "src/full-cycle.rs"
 
 [[bin]]
 name = "IPu32"
-path = "src/ip_u32.rs"
+path = "src/ip_u32/ip_u32.rs"
+
+[[bin]]
+name = "IPu32GlimGlam"
+path = "src/ip_u32/ip_u32_glimglam.rs"
 
 [[bin]]
 name = "LCG"

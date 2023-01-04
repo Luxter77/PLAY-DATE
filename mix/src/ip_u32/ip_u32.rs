@@ -1,31 +1,25 @@
 #![allow(non_snake_case)]
 
+mod ip_u32_lib;
+
+use crate::ip_u32_lib::{Octet, ToInt32, ToOctet};
+
 use rand::{thread_rng, Rng, rngs::ThreadRng};
 
 fn main() {
     let mut tr: ThreadRng = thread_rng();
-
-    let (x, y, w, z): (u8, u8, u8, u8) = (tr.gen(), tr.gen(), tr.gen(), tr.gen());
+    let num: u32 = tr.gen();
     
-    let ip: u32 = octet2int((x, y, w, z));
+    let octet: Octet = num.to_octet();
+    let ip:    u32   = octet.to_int32();
     
-    let octet: (u8, u8, u8, u8) = int2octet(ip);
-    
-    println!("{x}.{y}.{w}.{z} = {ip} === {octet:?}");
-}
-
-fn int2octet(int: u32) -> (u8, u8, u8, u8) {
-    return ((((int as u32) >> 00) & 0xFF) as u8, (((int as u32) >> 08) & 0xFF) as u8, (((int as u32) >> 16) & 0xFF) as u8, (((int as u32) >> 24) & 0xFF) as u8);
-}
-
-fn octet2int(octet: (u8, u8, u8, u8)) -> u32 {
-    return ((octet.0 as u32) << 00) + ((octet.1 as u32) << 08) + ((octet.2 as u32) << 16) + ((octet.3 as u32) << 24);
+    println!("{octet:?} == {x}.{y}.{w}.{z} = {ip} === {num}", x=octet[0], y=octet[1], w=octet[2], z=octet[3]);
 }
 
 #[cfg(tests)]
 mod tests {
     use std::{net::Ipv4Addr, str::FromStr};
-    use super::{int2octet, octet2int};
+    use super::lib::ip_u32_strucs::{int2octet, octet2int};
 
     #[test]
     fn t_int2octet() {
