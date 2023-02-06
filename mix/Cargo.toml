@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 human-sort         = { git = "https://github.com/dragazo/human-sort",  package = "human-sort"}
 human-sort-patched = { git = "https://github.com/luxter77/human-sort", package = "human-sort"}
+num-traits = "0.2.15"
 rand = "0.8.5"
 
 [features]
@@ -42,3 +43,7 @@ path = "src/unsortable.rs"
 [[bin]]
 name = "usize"
 path = "src/usize.rs"
+
+[[bin]]
+name = "mesh"
+path = "src/mesh/mesh.rs"
