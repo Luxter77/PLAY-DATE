@@ -25,6 +25,8 @@ macro_rules! test_these {
     };
 }
 
+// Are these impl bleeding into the rest of the crate???
+
 impl_point_for!(SIZE, u8);
 impl_point_for!(SIZE, u16);
 impl_point_for!(SIZE, u32);
