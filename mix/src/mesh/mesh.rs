@@ -6,7 +6,7 @@ mod point;
 use crate::point::Point;
 use rand::{rngs::ThreadRng, Rng};
 
-type  T   = i8;
+type  T   = i16;
 const SIZE: usize = 3;
 
 impl_point_for!(SIZE, T);
@@ -17,6 +17,8 @@ fn main() {
     let mut v: Vec<Point<SIZE, T>> = vec![Point::<SIZE, T>::zero(); 2];
     let mut rng: ThreadRng = rand::thread_rng();
 
+
+    // for _ in 0..rng.gen::<u8>() {
     for _ in 0..rng.gen::<u8>() {
         v.push(Point::<SIZE, T>::from(&rng.gen()));
     };

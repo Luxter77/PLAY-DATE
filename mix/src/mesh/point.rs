@@ -41,7 +41,7 @@ macro_rules! impl_point_for {
                 let mut o: [$T; $N] = [num_traits::zero(); $N];
                 for (idx, place) in o.iter_mut().enumerate() {
                     let vle: f64 = self.vdims[idx] as f64;
-                    *place = crate::math::nth_root(vle, root) as $T;
+                    *place = crate::math::nth_root(vle, root).unwrap_or(0.0) as $T;
                 };
                 return Self::from(&o);
             }
@@ -49,7 +49,21 @@ macro_rules! impl_point_for {
                 let mut o: [$T; $N] = [num_traits::zero(); $N];
                 for (idx, place) in o.iter_mut().enumerate() {
                     let vle: f64 = self.vdims[idx] as f64;
-                    *place = crate::math::nth_root(vle, root.vdims[idx] as f64) as $T;
+                    *place = crate::math::nth_root(vle, root.vdims[idx] as f64).unwrap_or(0.0) as $T;
+                };
+                return Self::from(&o);
+            }
+            pub fn point_clamp(self, min: Self, max: Self) -> Self {
+                let mut o: [$T; $N] = [num_traits::zero(); $N];
+                for (idx, place) in o.iter_mut().enumerate() {
+                    *place = self.vdims[idx].clamp(min.vdims[idx], max.vdims[idx]);
+                };
+                return Self::from(&o);
+            }
+            pub fn number_clamp(self, min: $T, max: $T) -> Self {
+                let mut o: [$T; $N] = [num_traits::zero(); $N];
+                for (idx, place) in o.iter_mut().enumerate() {
+                    *place = self.vdims[idx].clamp(max, min);
                 };
                 return Self::from(&o);
             }
@@ -60,17 +74,14 @@ macro_rules! impl_point_for {
         }
 
         impl From<&[$T; $N]> for Point<$N, $T> {
-            fn from(vdims: &[$T; $N]) -> Self { 
-                Self {
-                    vdims: *vdims,
-                }
-            }
+            fn from(vdims: &[$T; $N]) -> Self { Self { vdims: *vdims } }
         }
 
         impl From<Point<$N, $T>> for [$T; $N] {
-            fn from(hi: Point<$N, $T>) -> Self {
-                return hi.vdims;
-            }
+            fn from(hi: Point<$N, $T>) -> Self { hi.vdims }
+        }
+        impl From<$T> for Point<$N, $T> {
+            fn from(n: $T) -> Self { Self::from(&[n; $N]) }
         }
     }
 }

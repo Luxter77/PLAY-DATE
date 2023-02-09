@@ -34,23 +34,23 @@ macro_rules! test_aritm_point {
             let mut v = vec![<$T>::one(); 2];
             let mut rng: ThreadRng = rand::thread_rng();
             
+            let zero: $T = <$T>::zero();
+            let ptx_mx_sqr: $T = <$T>::max().partial_point_root(2.0f64);
+
             for _ in 0..rng.gen::<u8>() {
                 v.push(<$T>::from(&rng.gen()));
             }
 
-            let tn = std::any::type_name::<$T>();
-            println!("\n\tlet v: Vec<{tn}> = {v:?}");
+            // let tn = std::any::type_name::<$T>();
+            // println!("\n\tlet v: Vec<{tn}> = {v:#?}");
         
             for idx in 0..v.len() {
                 let ptx1: $T = v[idx];
                 let ptx2: $T = v[idx.saturating_sub(1)];
                 
-                let ptx1_sq: $T = ptx1.partial_point_root(2.0);
-                let ptx2_sq: $T = ptx2.partial_point_root(2.0);
-                
                 let _ptx_add: $T = <$T>::min() + ptx1;
                 let _ptx_sub: $T = <$T>::max() - ptx1;
-                let _ptx_mul: $T = ptx1_sq * ptx2_sq;
+                let _ptx_mul: $T = ptx1.point_clamp(zero, ptx_mx_sqr) * ptx2.point_clamp(zero, ptx_mx_sqr);
                 let _ptx_div: $T = ptx1 / ptx2.non_zero(num_traits::one());
             };
         };
@@ -63,26 +63,24 @@ macro_rules! test_aritm_signed_point {
             let mut v = vec![<$T>::zero(); 2];
             let mut rng: ThreadRng = rand::thread_rng();
             
-            let ptxt: $T =  <$T>::one() + <$T>::one();
+            let ptxt:       $T = <$T>::one() + <$T>::one();
+            let ptx_mx_sqr: $T = <$T>::max().partial_point_root(2.0f64);
 
             for _ in 0..rng.gen::<u8>() {
                 v.push(<$T>::from(&rng.gen()));
             }
 
-            let tn = std::any::type_name::<$T>();
-            println!("\n\tlet v: Vec<{tn}> = {v:?}");
+            // let tn = std::any::type_name::<$T>();
+            // println!("\n\tlet v: Vec<{tn}> = {v:#?}");
         
             for idx in 0..v.len() {
                 // both parts are divided by 2 to prevent overflow
                 let ptx1:    $T =  v[idx] / ptxt;
                 let ptx2:    $T =  v[idx.saturating_sub(1)] / ptxt;
 
-                let ptx1_sq: $T =  ptx1.partial_point_root(2.0);
-                let ptx2_sq: $T =  ptx2.partial_point_root(2.0);
-
                 let _ptx_add: $T =  ptx1 + ptx2;
                 let _ptx_sub: $T =  ptx1 - ptx2;
-                let _ptx_mul: $T =  ptx1_sq * ptx2_sq;
+                let _ptx_mul: $T =  ptx1.point_clamp(-ptx_mx_sqr, ptx_mx_sqr) * ptx2.point_clamp(-ptx_mx_sqr, ptx_mx_sqr);
                 let _ptx_div: $T =  ptx1 / ptx2.non_zero(num_traits::one());
                 let _ptx_neg: $T = -(ptx1.non_zero(num_traits::one()));
             };
