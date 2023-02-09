@@ -1,4 +1,5 @@
 mod point;
+#[path = "../libs/math.rs"] mod math;
 
 #[cfg(test)] mod test;
 
@@ -9,14 +10,16 @@ type  T   = i8;
 const SIZE: usize = 3;
 
 impl_point_for!(SIZE, T);
+impl_point_aritops_for!(SIZE, T);
+impl_point_bitops_for!(SIZE, T);
 
 fn main() {
     let mut v: Vec<Point<SIZE, T>> = vec![Point::<SIZE, T>::zero(); 2];
     let mut rng: ThreadRng = rand::thread_rng();
 
     for _ in 0..rng.gen::<u8>() {
-        v.push(Point::<SIZE, T>::from_slice(&rng.gen()));
-    }
+        v.push(Point::<SIZE, T>::from(&rng.gen()));
+    };
 
     for vi in v.iter() {
         println!("{:?}", vi);
