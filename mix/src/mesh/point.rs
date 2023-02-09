@@ -41,7 +41,7 @@ macro_rules! impl_point_for {
                 let mut o: [$T; $N] = [num_traits::zero(); $N];
                 for (idx, place) in o.iter_mut().enumerate() {
                     let vle: f64 = self.vdims[idx] as f64;
-                    *place = crate::math::nth_root(vle, root).unwrap_or(0.0) as $T;
+                    *place = $crate::math::nth_root(vle, root).unwrap_or(0.0) as $T;
                 };
                 return Self::from(&o);
             }
@@ -49,7 +49,7 @@ macro_rules! impl_point_for {
                 let mut o: [$T; $N] = [num_traits::zero(); $N];
                 for (idx, place) in o.iter_mut().enumerate() {
                     let vle: f64 = self.vdims[idx] as f64;
-                    *place = crate::math::nth_root(vle, root.vdims[idx] as f64).unwrap_or(0.0) as $T;
+                    *place = $crate::math::nth_root(vle, root.vdims[idx] as f64).unwrap_or(0.0) as $T;
                 };
                 return Self::from(&o);
             }
