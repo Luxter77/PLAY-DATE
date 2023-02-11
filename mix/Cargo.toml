@@ -6,7 +6,10 @@ edition = "2021"
 [dependencies]
 human-sort         = { git = "https://github.com/dragazo/human-sort",  package = "human-sort"}
 human-sort-patched = { git = "https://github.com/luxter77/human-sort", package = "human-sort"}
+num-bigfloat = "1.6.2"
 num-traits = "0.2.15"
+num-bigint = "0.4.3"
+easy-cast = "0.5.2"
 rand = "0.8.5"
 
 [features]
