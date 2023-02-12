@@ -1,6 +1,6 @@
 use num_traits::Float;
 
-/// https://rosettacode.org/wiki/Nth_root#Rust
+/// <https://rosettacode.org/wiki/Nth_root#Rust>
 /// 20210212 Rust programming solution
 #[allow(unused)]
 pub fn nth_root<F: Float>(a: F, n: F) -> Option<F> {
