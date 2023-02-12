@@ -1,12 +1,52 @@
 [package]
-name = "PLAY-DATE"
+name = "PLAY-DATE-MIX"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+human-sort         = { git = "https://github.com/dragazo/human-sort",  package = "human-sort"}
+human-sort-patched = { git = "https://github.com/luxter77/human-sort", package = "human-sort"}
+num-bigfloat = "1.6.2"
+num-traits = "0.2.15"
+num-bigint = "0.4.3"
+easy-cast = "0.5.2"
+rand = "0.8.5"
 
-[workspace]
+[features]
+HUGE-COMPUTER = []
 
-members = [
-    "mix"
-]
+[[bin]]
+name = "FiniteTimeAtRuntime"
+path = "src/finite_size_at_runtime.rs"
+
+[[bin]]
+name = "Full-Cycle"
+path = "src/full-cycle.rs"
+
+[[bin]]
+name = "IPu32"
+path = "src/ip_u32/ip_u32.rs"
+
+[[bin]]
+name = "IPu32GlimGlam"
+path = "src/ip_u32/ip_u32_glimglam.rs"
+
+[[bin]]
+name = "LCG"
+path = "src/LCG.rs"
+
+[[bin]]
+name = "Refs"
+path = "src/refs.rs"
+
+[[bin]]
+name = "unsortable"
+path = "src/unsortable.rs"
+
+[[bin]]
+name = "usize"
+path = "src/usize.rs"
+
+[[bin]]
+name = "mesh"
+path = "src/mesh/mesh.rs"
