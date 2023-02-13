@@ -79,24 +79,24 @@ impl<F: Float + Num> Num for FScalar<F> {
 
 impl<F: Float + ToPrimitive> ToPrimitive for FScalar<F> {
     fn to_isize(&self) -> Option<isize> { self.to_i64().as_ref().and_then(ToPrimitive::to_isize) }
-    fn to_i8(&self) -> Option<i8> { self.to_i64().as_ref().and_then(ToPrimitive::to_i8) }
-    fn to_i16(&self) -> Option<i16> { self.to_i64().as_ref().and_then(ToPrimitive::to_i16) }
-    fn to_i32(&self) -> Option<i32> { self.to_i64().as_ref().and_then(ToPrimitive::to_i32) }
-    fn to_i128(&self) -> Option<i128> { self.to_i64().map(From::from) }
+    fn to_i8(&self)    -> Option<i8>    { self.to_i64().as_ref().and_then(ToPrimitive::to_i8)    }
+    fn to_i16(&self)   -> Option<i16>   { self.to_i64().as_ref().and_then(ToPrimitive::to_i16)   }
+    fn to_i32(&self)   -> Option<i32>   { self.to_i64().as_ref().and_then(ToPrimitive::to_i32)   }
+    fn to_i128(&self)  -> Option<i128>  { self.to_i64().map(From::from)                          }
     fn to_usize(&self) -> Option<usize> { self.to_u64().as_ref().and_then(ToPrimitive::to_usize) }
-    fn to_u8(&self) -> Option<u8> { self.to_u64().as_ref().and_then(ToPrimitive::to_u8) }
-    fn to_u16(&self) -> Option<u16> { self.to_u64().as_ref().and_then(ToPrimitive::to_u16) }
-    fn to_u32(&self) -> Option<u32> { self.to_u64().as_ref().and_then(ToPrimitive::to_u32) }
-    fn to_u128(&self) -> Option<u128> { self.to_u64().map(From::from) }
-    fn to_f32(&self) -> Option<f32> { self.to_f64().as_ref().and_then(ToPrimitive::to_f32) }
-    fn to_f64(&self) -> Option<f64> {
+    fn to_u8(&self)    -> Option<u8>    { self.to_u64().as_ref().and_then(ToPrimitive::to_u8)    }
+    fn to_u16(&self)   -> Option<u16>   { self.to_u64().as_ref().and_then(ToPrimitive::to_u16)   }
+    fn to_u32(&self)   -> Option<u32>   { self.to_u64().as_ref().and_then(ToPrimitive::to_u32)   }
+    fn to_u128(&self)  -> Option<u128>  { self.to_u64().map(From::from)                          }
+    fn to_f32(&self)   -> Option<f32>   { self.to_f64().as_ref().and_then(ToPrimitive::to_f32)   }
+    fn to_f64(&self)   -> Option<f64>   {
         match self.to_i64() {
             Some(i) => i.to_f64(),
             None => self.to_u64().as_ref().and_then(ToPrimitive::to_f64),
         }
     }
-    fn to_i64(&self) -> Option<i64> { self.0.to_i64() }
-    fn to_u64(&self) -> Option<u64> { self.0.to_u64() }
+    fn to_i64(&self)   -> Option<i64>   { self.0.to_i64()                                        }
+    fn to_u64(&self)   -> Option<u64>   { self.0.to_u64()                                        }
 }
 
 impl<F: Float + NumCast> NumCast for FScalar<F> {
@@ -109,75 +109,82 @@ impl<F: Float + NumCast> NumCast for FScalar<F> {
 }
 
 impl<F: Float> Float for FScalar<F> {
-    fn epsilon() -> Self { <FScalar<F> as NumCast>::from(F::epsilon()).expect("Unable to cast from F::epsilon()") }
+    fn epsilon() -> Self { <Self as NumCast>::from(F::epsilon()).expect("Unable to cast from F::epsilon()") }
     fn to_degrees(self) -> Self {
         let halfpi = Self::zero().acos();
-        let ninety = <FScalar<F> as NumCast>::from(90u8).unwrap();
+        let ninety = <Self as NumCast>::from(90u8).unwrap();
         self * ninety / halfpi
     }
 
     fn to_radians(self) -> Self {
-        let halfpi = Self::zero().acos();
-        let ninety = <FScalar<F> as NumCast>::from(90u8).unwrap();
+        let halfpi: Self = Self::zero().acos();
+        let ninety: Self = <Self as NumCast>::from(90u8).unwrap();
         self * halfpi / ninety
     }
 
-    fn copysign(self, sign: Self) -> Self { if self.is_sign_negative() == sign.is_sign_negative() { self } else { self.neg() } }
+    fn copysign(self, sign: Self) -> Self {
+        if self.is_sign_negative() == sign.is_sign_negative() { self } else { self.neg() }
+    }
     
-    fn nan() -> Self { Self(F::nan()) }
-    fn infinity() -> Self { Self(F::infinity()) }
-    fn neg_infinity() -> Self { Self(F::neg_infinity()) }
-    fn neg_zero() -> Self { Self(F::neg_zero()) }
-    fn min_value() -> Self { Self(F::min_value()) }
-    fn min_positive_value() -> Self { Self(F::min_positive_value()) }
-    fn max_value() -> Self { Self(F::max_value()) }
-    fn is_nan(self) -> bool { self.0.is_nan() }
-    fn is_infinite(self) -> bool { self.0.is_infinite() }
-    fn is_finite(self) -> bool { self.0.is_finite() }
-    fn is_normal(self) -> bool { self.0.is_normal() }
-    fn classify(self) -> std::num::FpCategory { self.0.classify() }
-    fn floor(self) -> Self { Self(self.0.floor()) }
-    fn ceil(self) -> Self { Self(self.0.ceil()) }
-    fn round(self) -> Self { Self(self.0.round()) }
-    fn trunc(self) -> Self { Self(self.0.trunc()) }
-    fn fract(self) -> Self { Self(self.0.fract()) }
-    fn abs(self) -> Self { Self(self.0.abs()) }
-    fn signum(self) -> Self { Self(self.0.signum()) }
-    fn is_sign_positive(self) -> bool { self.0.is_sign_positive() }
-    fn is_sign_negative(self) -> bool { self.0.is_sign_negative() }
-    fn mul_add(self, a: Self, b: Self) -> Self { Self(self.0.mul_add(a.0, b.0)) }
-    fn recip(self) -> Self { Self(self.0.recip()) }
-    fn powi(self, n: i32) -> Self { Self(self.0.powi(n)) }
-    fn powf(self, n: Self) -> Self { Self(self.0.powf(n.0)) }
-    fn sqrt(self) -> Self { Self(self.0.sqrt()) }
-    fn exp(self) -> Self { Self(self.0.exp()) }
-    fn exp2(self) -> Self { Self(self.0.exp2()) }
-    fn ln(self) -> Self { Self(self.0.ln()) }
-    fn log(self, base: Self) -> Self { Self(self.0.log(base.0)) }
-    fn log2(self) -> Self { Self(self.0.log2()) }
-    fn log10(self) -> Self { Self(self.0.log10()) }
-    fn max(self, other: Self) -> Self { Self(self.0.max(other.0)) }
-    fn min(self, other: Self) -> Self { Self(self.0.min(other.0)) }
-    fn abs_sub(self, other: Self) -> Self { Self(self.0.abs_sub(other.0)) }
-    fn cbrt(self) -> Self { Self(self.0.cbrt()) }
-    fn hypot(self, other: Self) -> Self { Self(self.0.hypot(other.0)) }
-    fn sin(self) -> Self { Self(self.0.sin()) }
-    fn cos(self) -> Self { Self(self.0.cos()) }
-    fn tan(self) -> Self { Self(self.0.tan()) }
-    fn asin(self) -> Self { Self(self.0.asin()) }
-    fn acos(self) -> Self { Self(self.0.acos()) }
-    fn atan(self) -> Self { Self(self.0.atan()) }
-    fn atan2(self, other: Self) -> Self { Self(self.0.atan2(other.0)) }
-    fn sin_cos(self) -> (Self, Self) { let (a, b) = self.0.sin_cos(); return (Self(a), Self(b)) }
-    fn exp_m1(self) -> Self { Self(self.0.exp_m1()) }
-    fn ln_1p(self) -> Self { Self(self.0.ln_1p()) }
-    fn sinh(self) -> Self { Self(self.0.sinh()) }
-    fn cosh(self) -> Self { Self(self.0.cosh()) }
-    fn tanh(self) -> Self { Self(self.0.tanh()) }
-    fn asinh(self) -> Self { Self(self.0.asinh()) }
-    fn acosh(self) -> Self { Self(self.0.acosh()) }
-    fn atanh(self) -> Self { Self(self.0.atanh()) }
-    fn integer_decode(self) -> (u64, i16, i8) { self.0.integer_decode() }
+    fn nan               ()                       -> Self                 { Self(F::nan())                      }
+    fn infinity          ()                       -> Self                 { Self(F::infinity())                 }
+    fn neg_infinity      ()                       -> Self                 { Self(F::neg_infinity())             }
+    fn neg_zero          ()                       -> Self                 { Self(F::neg_zero())                 }
+    fn min_value         ()                       -> Self                 { Self(F::min_value())                }
+    fn min_positive_value()                       -> Self                 { Self(F::min_positive_value())       }
+    fn max_value         ()                       -> Self                 { Self(F::max_value())                }
+    fn is_nan            (self)                   -> bool                 { self.0.is_nan()                     }
+    fn is_infinite       (self)                   -> bool                 { self.0.is_infinite()                }
+    fn is_finite         (self)                   -> bool                 { self.0.is_finite()                  }
+    fn is_normal         (self)                   -> bool                 { self.0.is_normal()                  }
+    fn classify          (self)                   -> std::num::FpCategory { self.0.classify()                   }
+    fn floor             (self)                   -> Self                 { Self(self.0.floor())                }
+    fn ceil              (self)                   -> Self                 { Self(self.0.ceil())                 }
+    fn round             (self)                   -> Self                 { Self(self.0.round())                }
+    fn trunc             (self)                   -> Self                 { Self(self.0.trunc())                }
+    fn fract             (self)                   -> Self                 { Self(self.0.fract())                }
+    fn abs               (self)                   -> Self                 { Self(self.0.abs())                  }
+    fn signum            (self)                   -> Self                 { Self(self.0.signum())               }
+    fn is_sign_positive  (self)                   -> bool                 { self.0.is_sign_positive()           }
+    fn is_sign_negative  (self)                   -> bool                 { self.0.is_sign_negative()           }
+    fn mul_add           (self, a: Self, b: Self) -> Self                 { Self(self.0.mul_add(a.0, b.0)) }
+    fn recip             (self)                   -> Self                 { Self(self.0.recip())                }
+    fn powi              (self, n: i32)           -> Self                 { Self(self.0.powi(n))                }
+    fn powf              (self, n: Self)          -> Self                 { Self(self.0.powf(n.0))              }
+    fn sqrt              (self)                   -> Self                 { Self(self.0.sqrt())                 }
+    fn exp               (self)                   -> Self                 { Self(self.0.exp())                  }
+    fn exp2              (self)                   -> Self                 { Self(self.0.exp2())                 }
+    fn ln                (self)                   -> Self                 { Self(self.0.ln())                   }
+    fn log               (self, base: Self)       -> Self                 { Self(self.0.log(base.0))      }
+    fn log2              (self)                   -> Self                 { Self(self.0.log2())                 }
+    fn log10             (self)                   -> Self                 { Self(self.0.log10())                }
+    fn max               (self, other: Self)      -> Self                 { Self(self.0.max(other.0))           }
+    fn min               (self, other: Self)      -> Self                 { Self(self.0.min(other.0))           }
+    fn abs_sub           (self, other: Self)      -> Self                 { Self(self.0.abs_sub(other.0))       }
+    fn cbrt              (self)                   -> Self                 { Self(self.0.cbrt())                 }
+    fn hypot             (self, other: Self)      -> Self                 { Self(self.0.hypot(other.0))         }
+    fn sin               (self)                   -> Self                 { Self(self.0.sin())                  }
+    fn cos               (self)                   -> Self                 { Self(self.0.cos())                  }
+    fn tan               (self)                   -> Self                 { Self(self.0.tan())                  }
+    fn asin              (self)                   -> Self                 { Self(self.0.asin())                 }
+    fn acos              (self)                   -> Self                 { Self(self.0.acos())                 }
+    fn atan              (self)                   -> Self                 { Self(self.0.atan())                 }
+    fn atan2             (self, other: Self)      -> Self                 { Self(self.0.atan2(other.0))         }
+
+    fn sin_cos           (self)                   -> (Self, Self)         {
+        let (a, b) = self.0.sin_cos();
+        return (Self(a), Self(b));
+    }
+
+    fn exp_m1            (self)                   -> Self                 { Self(self.0.exp_m1())   }
+    fn ln_1p             (self)                   -> Self                 { Self(self.0.ln_1p())    }
+    fn sinh              (self)                   -> Self                 { Self(self.0.sinh())     }
+    fn cosh              (self)                   -> Self                 { Self(self.0.cosh())     }
+    fn tanh              (self)                   -> Self                 { Self(self.0.tanh())     }
+    fn asinh             (self)                   -> Self                 { Self(self.0.asinh())    }
+    fn acosh             (self)                   -> Self                 { Self(self.0.acosh())    }
+    fn atanh             (self)                   -> Self                 { Self(self.0.atanh())    }
+    fn integer_decode    (self)                   -> (u64, i16, i8)       { self.0.integer_decode() }
 }
 
 impl<F: Float + Debug> Display for FScalar<F> {
